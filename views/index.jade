@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    main
+      #prefFieldZkDt_Cleaning.container
+        p.center_gray Cleaning recipe #{name}
+        hr
+        span Choose recipe 
+        select
+          option(value='')  - 
+          option(value='')
+          option(value='')
+          option(value='')
+        a(href='#' id='') Save
+        a(href='#' id='') Delete
+        hr
+        .row
+          .col-6
+            h2 Operation parameters
+            label.own_label.autoW(for='') Time, s
+            input#prefFieldZkDt_rSetTime
+            br
+            label.own_label.autoW(for='') Substrate speed, rpm
+            input#prefFieldZkDt_wSubstrateSpeed
+            br
+            label.own_label.autoW(for='') Work pressure, Pa
+            input#prefFieldZkDt_rWorkPressure
+            br
+            label.own_label.autoW(for='') Gas system recipe
+            input#prefFieldZkDt_wGasCmd.operation_label
+            br
+            br
+          .col-5
+            h2 Assisting source
+            label.own_label.autoW(for='') Anode voltage, A
+            input#prefFieldZkDt_IS_rSetU
+            br
+            label.own_label.autoW(for='') Anode current, A
+            input#prefFieldZkDt_IS_rSetI1
+            br
+            label.own_label.autoW(for='') Glow current, A
+            input#prefFieldZkDt_IS_rSetI2
+            br
+            br
