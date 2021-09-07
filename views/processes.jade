@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    main#Process
+      span Choose recipe 
+      select#recipeChoice
+        option(value='') -
+        each item in data
+          option(value='#{item.id}') #{item.name}
+      div#ProcessTable
+        form(action='/process/add', method='post')
+          table
+            thead
+              tr
+                td id
+                td name
+                td cleaning
+                td layer
+                td gas
+                td time
+            tbody    
+              each item in data
+                tr 
+                  td #{item.id}
+                  td
+                    a(href='/process/#{item.id}') #{item.name}
+                  td #{item.cleaning}
+                  td #{item.layer}
+                  td #{item.gas}
+                  td #{item.time}
+              tr
+                td  
+                  a(href='#').unhiddenTr + 
+                  input(type='submit', value='Save').hiddenTr  
+                td
+                  input(name='name').hiddenTr 
+                td
+                  select.hiddenTr(name='cleaning')
+                    each cleaningItem in cleaningData
+                      option(value='#{cleaningItem.id}')= cleaningItem.name
+                    option(value='8')  8
+                td
+                  input(name='layer').hiddenTr 
+                td
+                  input(name='gas').hiddenTr 
+                td
+                  input(name='time').hiddenTr 
+                 

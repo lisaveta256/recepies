@@ -1,0 +1,64 @@
+extends layout
+
+block content
+    form#HTML(action='/gas/edit/#{dataOne.id}', method='post')
+        main
+            h1.center_gray Gas system recipe #{dataOne.name}
+            hr
+            span Choose recipe 
+            select#gasChoice
+                option(value='')  - 
+                each item in data
+                    option(value='#{item.id}') #{item.name}
+            button(type="submit").button Save
+            a(href='#' id='').button Delete
+            hr
+            .container
+                .row(style='width:100%')
+                    .col-6(style='border:1px solid darkgray;text-align: right;')
+                        h3 Параметры расходомеров
+                        table#cleanTable
+                            caption
+                            tbody
+                                tr
+                                    td 
+                                    td
+                                        label.own_label.autoW GMFC1(Ox)
+                                    td
+                                        label.own_label.autoW GMFC2(Ar)
+                                tr
+                                    td
+                                        label.own_label.autoW Использовать
+                                    td
+                                        a.prefFieldZkDt_wGas1_xUse0(href='#') Исп
+                                    td
+                                        a.prefFieldZkDt_wGas2_xUse0(href='#') Исп
+                                tr
+                                    td
+                                        label.own_label.autoW Режим
+                                    td
+                                        select#mode1
+                                            option(value='0') Расход
+                                            option(value='1') Ток разряда
+                                            option(value='2') Давление
+                                            option(value='3') Соотношение
+                                    td
+                                        select.prefFieldZkDt_wGas2_wMode
+                                            option(value='0') Расход
+                                            option(value='1') Ток разряда
+                                            option(value='2') Давление
+                                            option(value='3') Соотношение
+                                tr
+                                    td
+                                        label.own_label.autoW Расход, см3/мин
+                                    td
+                                        input(value='#{dataOne.flow}', name='flow')
+                                    td
+                                        input.prefFieldZkDt_wGas2_rSetNom
+                                tr
+                                    td
+                                        label.own_label.autoW Уставка
+                                    td
+                                        input.prefFieldZkDt_wGas1_rSetPoint
+                                    td
+                                        input.prefFieldZkDt_wGas2_rSetPoint

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+    #HTML
+    main
+        h1.center_gray Layer recipe
+        hr
+        span Choose recipe 
+        select
+          option(value='')  - 
+          option(value='') #{name}
+          option(value='')
+          option(value='')
+        a(href='#' id='').button Save
+        a(href='#' id='').button Load
+        a(href='#' id='').button Delete
+        hr
+        .container
+        .row
+            .col-6(style='border:1px solid darkgray;text-align:right;vertical-align:top;')
+                h3 Параметры рецепта
+                label.own_label.autoW(for='prefFieldZkDt_') Позиция подложек над заслонкой, мм
+                input.prefFieldZkDt_rHolderPosStbz
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Время стабилизации под заслонкой, с
+                input.prefFieldZkDt_rTimeSlbls
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Скорость вращения, об/мин
+                input.prefFieldZkDt_wSubstrateSpeed
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Давление начала операции, Па
+                input.prefFieldZkDt_rUltimatePressure
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Позиция подложек, мм
+                input.prefFieldZkDt_rHolderPos
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Выбор мишени
+                select.prefFieldZkDt_wTargetNum
+                    option(value='0') Мишень №1
+                    option(value='1') Мишень №2
+                    option(value='2') Мишень №3
+                br
+                label.own_label.autoW(for='prefFieldZkDt_') Газовая система
+                input.prefFieldZkDt_wGasSystemID
+            .col-5(style='border:1px solid darkgray;text-align:right;vertical-align:top;')
+                h3 БП высоковольтный
+                label.own_label.autoW(for='') Напряжение, В
+                input.prefFieldZkDt_wIPSSetU
+                br
+                br
+                h3 БП компенсатора
+                label.own_label.autoW(for='') Напряжение смещения, В
+                input.prefFieldZkDt_rITCSetUof
+                br
+                label.own_label.autoW(for='') Ток спирали 2, А
+                input.prefFieldZkDt_rITCSetI
+                br
+                label.own_label.autoW(for='') Ток спирали 3, А
+                input.prefFieldZkDt_rMGSetP

@@ -1,0 +1,94 @@
+extends layout
+
+block content
+    main#VTO
+      div
+        table
+          caption Cleaning
+          thead
+            tr
+              td id
+              td name
+              td valtage
+              td time
+          tbody#cleanings    
+            each cleaning in dataCleaning
+              tr.cleanings
+                td #{cleaning.id}
+                td #{cleaning.name}
+                td #{cleaning.voltage}
+                td #{cleaning.time}
+      div
+        table
+          caption Layer
+          thead
+            tr
+              td id
+              td name
+              td power
+              td time
+          tbody#layers    
+            each layer in dataLayer
+              tr.layers
+                td #{layer.id}
+                td #{layer.name}
+                td #{layer.power}
+                td #{layer.time}
+      div
+        table
+          caption Gas
+          thead
+            tr
+              td id
+              td name
+              td time
+          tbody#gases    
+            each gas in dataGas
+              tr.gases
+                td #{gas.id}
+                td #{gas.name}
+                td #{gas.time}
+      div
+        table
+          caption Process
+          thead
+            tr
+              td id
+              td name
+              td cleaning
+              td layer
+              td gas
+              td time
+          tbody#processes    
+            each process in dataProcess
+              tr.processes
+                td #{process.id}
+                td #{process.name}
+                td #{process.cleaning}
+                td #{process.layer}
+                td #{process.gas}
+                td #{process.time}                                
+      form#filter2()
+        div(style='display:inline-block; vertical-align: top;')
+          span
+            input#filter_abc(type='text' placeholder='Поиск' name='filter_abc')
+          |  in :
+          select#tableChoice(name='table_choice')
+            each table in tables
+              option(value='#{table.table_name}') #{table.table_name}
+          select#col_source(name='col_source')
+            option(value='id') id
+            option(value='name' selected) name    
+        .filterButtons(style='display:inline-block; vertical-align: top;')
+          input(type='radio' value='ASC' name='sort')
+          |  Incr.
+          input(type='radio' value='DESC' name='sort')
+          |  Decr.
+          input(type='radio' value='no' name='sort' checked='')
+          |  No
+          select#col_sort(name='col_sort')
+            option(value='id') id
+            option(value='name' selected) name
+        button(type='button')#filter_ok Ok
+        button#reset_filter Reset
+

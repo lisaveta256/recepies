@@ -6,6 +6,13 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var processRouter = require('./routes/process');
+var cleaningRouter = require('./routes/cleaning');
+var layerRouter = require('./routes/layer');
+var gasRouter = require('./routes/gas');
+var equipmentRouter = require('./routes/equipment');
+var ajaxRouter = require('./routes/ajax');
+
+
 //var usersRouter = require('./routes/users');
 //const db = require('./models');
 //db.sequelize.sync();
@@ -23,7 +30,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname,'node_modules/bootstrap/dist')))
 app.use(express.static(path.join(__dirname,'node_modules/jquery/dist')))
+app.use('/cleaning', cleaningRouter);
+app.use('/layer', layerRouter);
+app.use('/gas', gasRouter);
 app.use('/process', processRouter);
+app.use('/equipment', equipmentRouter);
+app.use('/ajax', ajaxRouter);
+
 app.use('/', indexRouter); // всегда последний маршрут
 //app.use('/users', usersRouter);
 

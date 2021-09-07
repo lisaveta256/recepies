@@ -1,8 +1,41 @@
 extends layout
 
 block content
-    main
-      table
-        tr
-          td 1
-          td 2
+    main#Process
+      a(href='/process/') All processes
+      br
+      span Choose recipe 
+      select#recipeChoice
+        option(value='') -
+        each d in all
+          option(value='#{d.id}') #{d.name}
+      
+      h1 #{item.name}
+      div#ProcessTable
+        form(action='/process/edit/#{item.id}', method='post')
+          table
+            thead
+              tr
+                td id
+                td name
+                td cleaning
+                td layer
+                td gas
+                td time
+            tbody    
+              tr 
+                td #{item.id}
+                td
+                  input(value='#{item.name}',name='name')
+                td
+                  input(value='#{item.cleaning}',name='cleaning')
+                td
+                  input(value='#{item.layer}',name='layer')
+                td
+                  input(value='#{item.gas}',name='gas')
+                td
+                  input(value='#{item.time}',name='time')
+          br
+          br      
+          input(type='submit', value='Save')        
+          a(href='/process/delete/#{item.id}').delete Delete
