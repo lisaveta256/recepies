@@ -8,7 +8,10 @@ block content
       select#recipeChoice
         option(value='') -
         each d in all
-          option(value='#{d.id}') #{d.name}
+          if(d.id == item.id)
+            option(value='#{d.id}', selected='selected') #{d.name}
+          else
+            option(value='#{d.id}') #{d.name}
       
       h1 #{item.name}
       div#ProcessTable

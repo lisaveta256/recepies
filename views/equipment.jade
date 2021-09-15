@@ -1,5 +1,148 @@
 extends layout
 
+block scripts        
+  script(type='text/javascript' src='/Scripts/jqplot/jquery.jqplot.js')
+  script(type='text/javascript' src='/Scripts/jqplot/plugins/jqplot.barRenderer.js')
+  script(type='text/javascript' src='/Scripts/jqplot/plugins/jqplot.highlighter.js')
+  script(type='text/javascript' src='/Scripts/jqplot/plugins/jqplot.cursor.js')
+  script(type='text/javascript' src='/Scripts/jqplot/plugins/jqplot.pointLabels.js')
+  script(type='text/javascript' src='https://canvasjs.com/assets/script/jquery.canvasjs.min.js')
+  script.
+    $(function(){
+      var times=[];
+    // Our data renderer function, returns an array of the form:
+    // [[[x1, sin(x1)], [x2, sin(x2)], ...]]
+      var sineRenderer = function() {
+        var data = [[]];
+        
+        var dataCleaning=!{JSON.stringify(dataCleaning)};
+       // console.log('dataCleaning->',dataCleaning);
+        Object.keys(dataCleaning).forEach((key,i)=>{
+          date = new Date(dataCleaning[key].created);
+          newdate = date.getFullYear()+'-0'+date.getDate() + '-0' + date.getMonth() + ' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+          //console.log('date-->',newdate)
+          data[0].push([newdate, dataCleaning[key].time]);
+          times.push(newdate)
+        })
+       console.log('<--...-->',data)
+
+     /*   for (var i=0; i<13; i+=0.5) {
+          
+        }*/
+        return data;
+      };
+   
+    // we have an empty data array here, but use the "dataRenderer"
+    // option to tell the plot to get data from our renderer.
+      var formatter = $.jqplot.DateTickFormatter;
+      var plot1 = $.jqplot('chart1',[],{
+          seriesColors: ["yellow", "rgb(211, 235, 59)"],
+          highlighter: { //????????/
+            show: true,
+            sizeAdjust: 1,
+            tooltipOffset: 9
+          },
+          title: 'Sine Data Renderer',
+          dataRenderer: sineRenderer,
+          grid: {
+            background: 'gray',
+            drawBorder: false,
+            shadow: false,
+            gridLineColor: '#666666',
+            gridLineWidth: 1
+          },
+          legend: { //????????/
+            show: false,
+            placement: 'outside'
+          },
+          seriesDefaults: {
+            rendererOptions: {
+                smooth: true,
+                animation: {
+                    show: true
+                }
+            },
+            showMarker: false
+          },
+          series:[{lineWidth:4, markerOptions:{style:'square'}}],//????????????/
+          axesDefaults: {
+           // tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+            rendererOptions: {
+                baselineWidth: 1.5,
+                baselineColor: '#444444',
+                drawBaseline: false
+            }
+          },
+          axes: {
+            xaxis: {
+               /* renderer: $.jqplot.DateAxisRenderer,
+               // tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+               // numberTicks: 7,
+               // tickOptions: {
+                    //formatString: "%Y-%d-%m %H:%M:%S",
+                //    angle: -30,
+                 //   textColor: '#dddddd'
+               // },
+               // min: "2021-08-08, 00:00:00",
+               // max: "2021-10-10, 00:00:00",
+               // tickInterval: "1 hour",
+                //drawMajorGridlines: false*/
+              renderer:$.jqplot.DateAxisRenderer,
+             // tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+              ticks: times,
+              tickOptions:{
+                angle: -30,
+                formatString: '%d-%m %H:%M:%S',
+                showTicks: true
+                },
+              tickInterval:'1 month',
+              min:"2021-08-08, 00:00:00"
+            },
+            yaxis: {
+                //renderer: $.jqplot.LogAxisRenderer,
+                pad: 0,
+                rendererOptions: {
+                    minorTicks: 1
+                },
+                tickOptions: {
+                   // formatString: "$%'d",
+                  //  showMark: false
+                }
+            }
+          }
+      });
+      chartN()
+      function chartN(){
+        var dataPoints = [];
+        var dataCleaning2=!{JSON.stringify(dataCleaning)};
+        Object.keys(dataCleaning2).forEach((key,i)=>{
+          let row = {};
+         // console.log('x',dataCleaning2[key].id)
+         // console.log('x',dataCleaning2[key].time)
+          row['x']=dataCleaning2[key].id;
+          row['y']=dataCleaning2[key].time;
+         // console.log('row',row)          
+          dataPoints.push(row)
+          //console.log('dataPoints',dataPoints)    
+        })
+        var options = {
+          title: {
+            text: "Cleaning data"
+          },
+          animationEnabled: true,
+          exportEnabled: true,
+          data: [
+          {
+            type: "spline", //change it to line, area, column, pie, etc
+            dataPoints: dataPoints
+          }
+          ]
+        };
+        $("#chartContainer").CanvasJSChart(options);
+      }
+    });
+block styles  
+  link(rel='stylesheet' type='text/css' href='/Scripts/jqplot/jquery.jqplot.css')
 block content
     main#VTO
       div
@@ -11,6 +154,7 @@ block content
               td name
               td valtage
               td time
+              td created at
           tbody#cleanings    
             each cleaning in dataCleaning
               tr.cleanings
@@ -18,6 +162,7 @@ block content
                 td #{cleaning.name}
                 td #{cleaning.voltage}
                 td #{cleaning.time}
+                td #{cleaning.created}
       div
         table
           caption Layer
@@ -91,4 +236,7 @@ block content
             option(value='name' selected) name
         button(type='button')#filter_ok Ok
         button#reset_filter Reset
-
+    #chart1(style='height:400px;width:100%; ')
+    hr      
+    #chartContainer(style='height:400px;width:100%; ')      
+    

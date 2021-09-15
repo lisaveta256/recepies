@@ -63,5 +63,12 @@ $(function(){
         let id = $(this).val();
         document.location.href='/gas/'+id;
     })
-    
+    $('#cleaningChoice').on('change',function(){
+        let id = $(this).val();
+        document.location.href='/cleaning/'+id;
+    })
+    $('#layerChoice').on('change',function(){
+        let id = $(this).val();
+        document.location.href='/layer/'+id;
+    })
 })

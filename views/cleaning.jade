@@ -6,41 +6,43 @@ block content
         h1.center_gray Cleaning recipe #{name}
         hr
         span Choose recipe 
-        select
+        select#cleaningChoice
           option(value='')  - 
-          option(value='') #{name}
-          option(value='')
-          option(value='')
-        a(href='#' id='').button Save
-        a(href='#' id='').button Load
-        a(href='#' id='').button Delete
-        hr
-        .container
-          .row
-            .col-6
-              h2 Operation parameters
-              label.own_label.autoW(for='') Time, s
-              input#prefFieldZkDt_rSetTime(value='#{time}')
-              br
-              label.own_label.autoW(for='') Substrate speed, rpm
-              input#prefFieldZkDt_wSubstrateSpeed
-              br
-              label.own_label.autoW(for='') Work pressure, Pa
-              input#prefFieldZkDt_rWorkPressure
-              br
-              label.own_label.autoW(for='') Gas system recipe
-              input#prefFieldZkDt_wGasCmd.operation_label
-              br
-              br
-            .col-5
-              h2 Assisting source
-              label.own_label.autoW(for='') Anode voltage, A
-              input#prefFieldZkDt_IS_rSetU
-              br
-              label.own_label.autoW(for='') Anode current, A
-              input#prefFieldZkDt_IS_rSetI1
-              br
-              label.own_label.autoW(for='') Glow current, A
-              input#prefFieldZkDt_IS_rSetI2
-              br
-              br
+          each item in dataAll
+            if(item.id == data.id)
+              option(value='#{item.id}', selected='selected') #{item.name}
+            else
+              option(value='#{item.id}') #{item.name}
+        form(action='/cleaning/edit/#{data.id}', method='post')    
+          button(type='submit').button Save
+          a(href='/cleaning/delete/#{data.id}' id='').delete Delete
+          hr
+          .container
+            .row
+              .col-6
+                h2 Operation parameters
+                label.own_label.autoW(for='') Time, s
+                input#prefFieldZkDt_rSetTime(value='#{data.time}' name='time')
+                br
+                label.own_label.autoW(for='') Substrate speed, rpm
+                input#prefFieldZkDt_wSubstrateSpeed
+                br
+                label.own_label.autoW(for='') Work pressure, Pa
+                input#prefFieldZkDt_rWorkPressure
+                br
+                label.own_label.autoW(for='') Gas system recipe
+                input#prefFieldZkDt_wGasCmd.operation_label
+                br
+                br
+              .col-5
+                h2 Assisting source
+                label.own_label.autoW(for='') Anode voltage, A
+                input#prefFieldZkDt_IS_rSetU(value='#{data.voltage}' name='voltage')
+                br
+                label.own_label.autoW(for='') Anode current, A
+                input#prefFieldZkDt_IS_rSetI1
+                br
+                label.own_label.autoW(for='') Glow current, A
+                input#prefFieldZkDt_IS_rSetI2
+                br
+                br

@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../models');
 var Gas = db.gas;
 
-/* GET home page. */
+
 router.post('/edit/:url', function(req, res, next) {
      let url;
      if(req.params.url){
@@ -17,6 +17,19 @@ router.post('/edit/:url', function(req, res, next) {
      }     
 });
 
+router.get('/delete/:url', function(req, res, next) {
+     let url;
+     if(req.params.url){
+          url = req.params.url;
+          Gas.destroy({where: {id: url} })
+          .then(()=>{
+               res.redirect('/gas/')
+          })
+     }else{
+          res.render('error');
+     }     
+});
+/* GET home page. */
 router.get('/:url?', function(req, res, next) {
      let url;
      if(req.params.url!=null){
